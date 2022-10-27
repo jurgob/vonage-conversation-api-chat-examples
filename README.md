@@ -1,6 +1,8 @@
 # vonage-conversation-api-chat-examples
 
-## install
+## Getting started
+
+### install
 
 checkout the repo
 
@@ -20,7 +22,27 @@ npm run create_app APIKEY APISECRET
 
 this will save your application details in config/application.json
 
-## important backend snippet
+
+### run it
+
+```bash 
+npm run dev
+```
+
+this will enable the hotreloading
+
+it is also possible to run it without hotreload: 
+
+```bash 
+npm start
+```
+
+## What is this
+
+This is a simple chat application done using the [Vonage Conversation API](https://developer.vonage.com/conversation/overview) ( [docs](https://developer.vonage.com/api/conversation) ) and the [Vonage JS Client SDK](https://developer.vonage.com/client-sdk/in-app-voice/overview) ( [docs](https://developer.vonage.com/sdk/stitch/javascript/NexmoClient.html) )
+
+
+## Important backend snippet
 
 
 ### create a user
