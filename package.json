@@ -1,0 +1,15 @@
+{
+  "name": "vonage-conversation-api-chat-examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cli_create_app": "node bin/create_app.js "
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.1.3"
+  }
+}
