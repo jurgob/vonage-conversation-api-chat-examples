@@ -128,7 +128,7 @@ const event = await conversation.sendMessage({ "message_type": "text", "text": m
 
 ```js
 
-//TODO
+const conversation = nexmoClient.newConversationAndJoin({name:"conv1", display_name: "My Group Chat" })
 
 ```
 
@@ -136,13 +136,26 @@ const event = await conversation.sendMessage({ "message_type": "text", "text": m
 
 
 
-### accept a conversation invite
+### invite a user to a conversation
 
 ```js
-
+const memberInvited = await conversation.invite({
+ user_name: "userB"
+})
 //TODO
 
 ```
+
+### manage invitations to a new conversation
+
+```js
+ conversation.on("member:invited", (member, event) => {
+   console.log(member.userName + " invited to the conversation");
+ });
+ //TODO
+
+```
+
 
 ### typing indication
 
