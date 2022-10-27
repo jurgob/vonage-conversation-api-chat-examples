@@ -1,15 +1,58 @@
 <!DOCTYPE html>
 <html>
-<body>
+    <body>
 
-<h2>Login</h2>
+        <h2>Login</h2>
+        <form action="/api/login" method="post" name="login" >
+            <label for="username">Username:</label><br>
+            <input type="text" id="login_username" name="username"><br>
+            <input type="submit" value="Login">
+        </form>
+        <p>Login Form</p>
 
-<p>Login Form</p>
+        <h2>Subscribe</h2>
+        <form action="/api/login" method="post" name="subscribe" >
+            <label for="username">Username:</label><br>
+            <input type="text" id="subscribe_username" name="username"><br>
+            <input type="submit" value="Subscribe">
+        </form>
 
-<h2>Subscribe</h2>
 
-<p>Subscribe Form</p>
+    </body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.3/axios.min.js"></script>
+    <script type="text/javascript">
+        async function formSubmit(event){
+            event.preventDefault();//block form submit, we do it in js
+            console.log(event); 
+            const formObj = this
+              
+            const username = document.forms.login.username.value // both login and subscribe form have a "username" field
+              
+            console.log("formObj"); 
+            console.log(formObj) ; 
+
+            const formSubmitResponse = await axios({
+                url: formObj.action,
+                method: formObj.method,
+                data: {
+                    username: username,
+                },
+            }); 
+
+            const data = formSubmitResponse.data //both api/login and api/subscribe return the same response
+            
+            const { token, api_url, ws_url} = data // those data are getted by the api call of login / subscribe
+            
+            // go to the chat page. doing this redirect is not a good practice, but is the simplest implementation
+            window.location.href = `/chat.html?username=${username}&api_url=${api_url}&ws_url=${ws_url}&token=${token}`
+
+        }
 
 
-</body>
+        document.forms.login.addEventListener("submit", formSubmit)
+        document.forms.subscribe.addEventListener("submit", formSubmit)
+
+</script>
+
 </html>

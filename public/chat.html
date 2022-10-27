@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Login</h2>
+
+<p>Login Form</p>
+
+<h2>Subscribe</h2>
+
+<p>Subscribe Form</p>
+
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/nexmo-client@9.1.5/dist/nexmoClient.min.js"></script>
+<script type="text/javascript">
+    console.log("NexmoClient", NexmoClient)
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const token = urlParams.get('token')
+    const api_url = urlParams.get('api_url')
+    const ws_url = urlParams.get('ws_url')
+    // console.log("token", token)
+ </script>
+
+</html>

@@ -23,7 +23,7 @@ app.post("/api/login", async (req, res) => {
 
 app.post("/api/subscribe", async (req, res) => {
     const { username } = req.body;
-
+    
     res.json({
         username: username,
         token: "TOKEN",
