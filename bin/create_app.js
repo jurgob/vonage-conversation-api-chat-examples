@@ -1,4 +1,5 @@
 const axios = require('axios');
+const fs = require('fs');
 
 
 async function main(){
@@ -12,10 +13,22 @@ async function main(){
         console.log(`if you don't have them, create an account here: https://dashboard.nexmo.com/`)
         process.exit(1)
     }
-    
+
     console.log("api key / api secret: ", api_key)
 
     console.log("creating app")
+
+    const applicationData = {
+        "name": "myapp"
+    }
+
+    fs.writeFileSync('./config/application.json', JSON.stringify(applicationData, null, '   '))
+
+    console.log("app info stored on config/application.json")
+
+    //const appString = fs.readFileSync('./config/application.json')
+    // console.log(JSON.parse(appString))
+
 }
 
 main()
