@@ -94,7 +94,7 @@ app.post("/api/login", async (req, res) => {
     
     res.json({
         username: username,
-        token: "TOKEN",
+        token: generateTokenForUser(username),
         ws_url: WS_URL,
         cs_url: CS_URL,
     });
@@ -121,7 +121,7 @@ app.post("/api/subscribe", async (req, res) => {
 
         res.json({
             username: username,
-            token: "TOKEN",
+            token: generateTokenForUser(username),
             ws_url: WS_URL,
             cs_url: CS_URL,
         });
