@@ -139,9 +139,9 @@ app.post("/api/subscribe", async (req, res) => {
 /* 
 those two endpoint are ther more for helping the debug
 */
-app.post("/api/users", async (req, res) => {
-    //create a conversation user. in a real scenario you would create a user in your system and bind it somehow with the CS user
-     
+
+app.get("/api/users", async (req, res) => {
+    //get the list of all the users created in your application
     try{
         const userListResponse = await axios({
             url: `${CS_URL}/v0.3/users`,
@@ -150,7 +150,6 @@ app.post("/api/users", async (req, res) => {
                 'Authorization': `Bearer ${SERVER_TOKEN}`,
                 "Content-Type": "application/json"
             }
-
         })
 
         res.json(userListResponse.data);
@@ -160,10 +159,41 @@ app.post("/api/users", async (req, res) => {
         res.json({
             err: err
         })
-
     }
-
 });
+
+app.get("/api/users/:username", async (req, res) => {
+    const {username}= req.params;
+    //get the list of all the users created in your application
+    try{
+        const userListResponse = await axios({
+            url: `${CS_URL}/v0.3/users?name=${username}`,
+            method: "GET",
+            headers: {
+                'Authorization': `Bearer ${SERVER_TOKEN}`,
+                "Content-Type": "application/json"
+            }
+        })
+        const userInfo = userListResponse.data._embedded.users[0]
+
+        if(userInfo){
+            res.json(userInfo);
+        }else{
+            res.status(400)
+            res.json({
+                err: "user not found"
+            });
+        }
+        
+
+    }catch(err){
+        res.status(500)
+        res.json({
+            err: err
+        })
+    }
+});
+
 
 
 app.listen(port, () => {

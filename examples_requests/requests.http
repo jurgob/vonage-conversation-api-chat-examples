@@ -19,7 +19,26 @@ content-type: application/json
 
 ### user list
 
-POST http://localhost:3000/api/users HTTP/1.1
+GET http://localhost:3000/api/users HTTP/1.1
+content-type: application/json
+
+{
+    "username": "userA"
+}
+
+### get user info
+
+GET http://localhost:3000/api/users/userA HTTP/1.1
+content-type: application/json
+
+{
+    "username": "userA"
+}
+
+
+### get user info - user not found
+
+GET http://localhost:3000/api/users/notExistingUser HTTP/1.1
 content-type: application/json
 
 {
