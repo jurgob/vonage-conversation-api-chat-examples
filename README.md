@@ -81,6 +81,48 @@ const nexmoClient = await new NexmoClient(sdkConfig).createSession(TOKEN)
 [check in the example](https://github.com/jurgob/vonage-conversation-api-chat-examples/blob/main/public/chat.html#L38)
 
 
+### get the list of my conversations
+
+```js
+//TODO
+ const conversation = await nexmoClient.getConversation(CONVERSATION_ID);
+
+```
+
+
+### get a conversation
+
+```js
+//TODO
+ const conversation = await nexmoClient.getConversation(CONVERSATION_ID);
+
+```
+
+### fetch all the conversation events (like the messages contained inside the conversation)
+
+```js
+//TODO
+const conversationEventsList = await conversation.getEvents()
+```
+
+### receive a text message in a conversation
+
+```js
+conversation.on("message",(sender, event) => {
+  //your code here
+})
+//TODO
+
+```
+
+### send a text message in a conversation
+
+```js
+const event = await conversation.sendMessage({ "message_type": "text", "text": messageTextarea.value })
+//TODO
+
+```
+
 
 ### create and join a conversation
 
@@ -91,21 +133,7 @@ const nexmoClient = await new NexmoClient(sdkConfig).createSession(TOKEN)
 ```
 
 
-### send a text message in a conversation
 
-```js
-
-//TODO
-
-```
-
-### receive a text message in a conversation
-
-```js
-
-//TODO
-
-```
 
 
 ### accept a conversation invite
@@ -115,4 +143,24 @@ const nexmoClient = await new NexmoClient(sdkConfig).createSession(TOKEN)
 //TODO
 
 ```
+
+### typing indication
+
+```js
+
+  conversation.startTyping();
+  
+  conversation.on("text:typing:on", (data, event) => {
+   if (conversation.me.id !== data.memberId) {
+     console.log(data.userName + " is typing...");
+   }
+ });
+
+ conversation.on("text:typing:off", (data) => {
+   ///your code
+ });
+
+
+```
+
 
