@@ -7,7 +7,7 @@ const port = 3000
 
 
 
-const CS_URL = `https://api.nexmo.com`;
+const API_URL = `https://api.nexmo.com`;
 const WS_URL = `https://ws.nexmo.com`;
 
 
@@ -91,23 +91,32 @@ app.use(express.static('public'))
 
 app.post("/api/login", async (req, res) => {
     const { username } = req.body;
-    
-    res.json({
-        username: username,
-        token: generateTokenForUser(username),
-        ws_url: WS_URL,
-        cs_url: CS_URL,
-    });
+    try{
+        
+        res.json({
+            username: username,
+            token: generateTokenForUser(username),
+            ws_url: WS_URL,
+            api_url: API_URL,
+        });
+
+
+    }catch(err){
+        res.status(500)
+        res.json({
+            err: err
+        })  
+    }
 
 });
 
 app.post("/api/subscribe", async (req, res) => {
     const { username } = req.body;
     //create a conversation user. in a real scenario you would create a user in your system and bind it somehow with the CS user
-     
+    console.log("/api/subscribe ", username)
     try{
         const newUserResponse = await axios({
-            url: `${CS_URL}/v0.3/users`,
+            url: `${API_URL}/v0.3/users`,
             method: "post",
             data: {
                 name: username,
@@ -123,7 +132,7 @@ app.post("/api/subscribe", async (req, res) => {
             username: username,
             token: generateTokenForUser(username),
             ws_url: WS_URL,
-            cs_url: CS_URL,
+            api_url: API_URL,
         });
 
     }catch(err){
@@ -144,7 +153,7 @@ app.get("/api/users", async (req, res) => {
     //get the list of all the users created in your application
     try{
         const userListResponse = await axios({
-            url: `${CS_URL}/v0.3/users`,
+            url: `${API_URL}/v0.3/users`,
             method: "GET",
             headers: {
                 'Authorization': `Bearer ${SERVER_TOKEN}`,
@@ -167,7 +176,7 @@ app.get("/api/users/:username", async (req, res) => {
     //get the list of all the users created in your application
     try{
         const userListResponse = await axios({
-            url: `${CS_URL}/v0.3/users?name=${username}`,
+            url: `${API_URL}/v0.3/users?name=${username}`,
             method: "GET",
             headers: {
                 'Authorization': `Bearer ${SERVER_TOKEN}`,

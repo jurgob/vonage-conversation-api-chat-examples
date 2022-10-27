@@ -1,27 +1,75 @@
 <!DOCTYPE html>
 <html>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
 
-<h2>Login</h2>
-
-<p>Login Form</p>
-
-<h2>Subscribe</h2>
-
-<p>Subscribe Form</p>
+    <body>
+        <div id="errorPanel" class="errorPanel" ></div>
+        <p>
+            Welcome <span style="display: inline;"  id="userNameInHeader" ></span>
+        </p>
 
 
-</body>
+    </body>
 
-<script src="https://cdn.jsdelivr.net/npm/nexmo-client@9.1.5/dist/nexmoClient.min.js"></script>
-<script type="text/javascript">
-    console.log("NexmoClient", NexmoClient)
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const token = urlParams.get('token')
-    const api_url = urlParams.get('api_url')
-    const ws_url = urlParams.get('ws_url')
-    // console.log("token", token)
- </script>
+    <script src="https://cdn.jsdelivr.net/npm/nexmo-client@9.1.5/dist/nexmoClient.min.js"></script>
+    <script type="text/javascript">
+        async function onPageLoad(){
+            console.log("NexmoClient", NexmoClient)
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const username = urlParams.get('username')
+            const token = urlParams.get('token')
+            const api_url = urlParams.get('api_url')
+            const ws_url = urlParams.get('ws_url')
+
+
+            showTextInId("userNameInHeader", username, 'inline')
+
+            const clientConfig = {
+                url: ws_url,
+                nexmo_api_url: api_url
+            }
+            const nexmoClient = await new NexmoClient(clientConfig)
+                .createSession(token)
+            console.log(nexmoClient)
+        
+        }
+
+        function showTextInId(id, text, display){
+            const el = document.getElementById(id);
+            el.innerHTML=text
+            el.style.display = display || "block"
+        }
+        function hideId(id){
+            const el = document.getElementById(id);
+            el.innerHTML=''
+            el.style.display = "none"
+        }
+
+        function showError(errorString){
+            showTextInId("errorPanel", errorString)
+        }
+
+        function hideError(){
+            hideId("errorPanel")
+        }
+
+
+        function onNexmoClientLogedIn(){}
+
+        try{
+            hideError()
+            onPageLoad()
+        }catch(err){
+            showError(err)
+        }
+        
+
+        // console.log("token", token)
+    </script>
 
 </html>
