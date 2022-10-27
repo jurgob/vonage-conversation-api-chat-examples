@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "cli_create_app": "node bin/create_app.js "
+    "create_app": "node bin/create_app.js "
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.1.3"
+    "axios": "^1.1.3",
+    "nodejs-base64": "^2.0.0"
   }
 }
