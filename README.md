@@ -23,6 +23,7 @@ this will save your application details in config/application.json
 ## important backend snippet
 
 
+### create a user
 ```js
  // create a user
  const newUserResponse = await axios({
@@ -38,7 +39,7 @@ this will save your application details in config/application.json
 
   })
 ```
-
+[check in the example](https://github.com/jurgob/vonage-conversation-api-chat-examples/blob/main/src/server.js#L118)
 
 ## important vonage client JS snippet
 
@@ -55,6 +56,9 @@ const sdkConfig = {
 const nexmoClient = await new NexmoClient(sdkConfig).createSession(TOKEN)
 
 ```
+[check in the example](https://github.com/jurgob/vonage-conversation-api-chat-examples/blob/main/public/chat.html#L38)
+
+
 
 ### create and join a conversation
 
