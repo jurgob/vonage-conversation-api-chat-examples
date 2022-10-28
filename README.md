@@ -1,5 +1,12 @@
 # vonage-conversation-api-chat-examples
 
+
+## What is this
+
+This is a simple chat application done using the [Vonage Conversation API](https://developer.vonage.com/conversation/overview) ( [docs](https://developer.vonage.com/api/conversation) ) and the [Vonage JS Client SDK](https://developer.vonage.com/client-sdk/in-app-voice/overview) ( [docs](https://developer.vonage.com/sdk/stitch/javascript/NexmoClient.html) ).
+
+This is both a working example and a collection of cheat codes, with some working examples.
+
 ## Getting started
 
 ### install
@@ -20,7 +27,8 @@ Once you log in you will see the APIKEY and the APISECRET in your home
 npm run create_app APIKEY APISECRET
 ```
 
-this will save your application details in config/application.json
+this last command will create a [vonage application](https://developer.vonage.com/application/overview)
+and it will save your application details in config/application.json
 
 
 ### run it
@@ -37,12 +45,94 @@ it is also possible to run it without hotreload:
 npm start
 ```
 
-## What is this
-
-This is a simple chat application done using the [Vonage Conversation API](https://developer.vonage.com/conversation/overview) ( [docs](https://developer.vonage.com/api/conversation) ) and the [Vonage JS Client SDK](https://developer.vonage.com/client-sdk/in-app-voice/overview) ( [docs](https://developer.vonage.com/sdk/stitch/javascript/NexmoClient.html) )
-
 
 ## Important backend snippet
+
+### minting JWT tokens
+
+After you have created a [vonage application](https://developer.vonage.com/application/overview), you can use the application id and the private_key related to mint JWT tokens.  
+
+You can have differnt types of JWT tokens: a *backend* one and a *user* one.  
+Ther *user* token is meant to be used by your frontend (that's what you use to authenticate a client sdk). 
+The only difference between the two is that the the *user* token specify the *sub* field in the payload. 
+This must be a valid user name.
+Typically in the user one you will put shorter expiration and more restrictive acl's.
+
+A user token can't:
+ - create a user
+ - list all the users in your application
+ - list all the conversations in your application
+ - set the "from" when it send an event in a conversation (the from is  gonna be the user associated with the token)
+
+
+#### Mint a backend JTW token
+
+```js
+const now = (Date.now() / 1000) 
+const ONE_WEEK_FROM_NOW = Math.floor(now + (((60 * 60)  * 60 ) * 24 * 7))
+
+
+const PAYLOAD = {
+  "iat": now,
+  "nbf": now,
+  "exp": expiration,
+  "jti": now,
+  "paths": {
+   "/**": {}
+  }
+}
+
+jwt.sign(
+      ,
+      {
+        key: PRIVATE_KEY,
+      },
+      {
+        algorithm: 'RS256',
+      }
+    )
+```
+
+[check in the example](https://github.com/jurgob/vonage-conversation-api-chat-examples/blob/main/src/server.js#L39)
+
+#### Mint a user JTW token
+
+```js
+const now = (Date.now() / 1000) 
+const ONE_WEEK_FROM_NOW = Math.floor(now + (((60 * 60)  * 60 ) * 24 * 7))
+
+
+const PAYLOAD = {
+  "sub": "userA",
+  "iat": now,
+  "nbf": now,
+  "exp": expiration,
+  "jti": now,
+  "paths": {
+   /*/users/**":{},
+   "/*/conversations/**":{},
+   "/*/sessions/**":{},
+   //... the rest of your urls
+  }
+}
+
+jwt.sign(
+      ,
+      {
+        key: PRIVATE_KEY,
+      },
+      {
+        algorithm: 'RS256',
+      }
+    )
+```
+
+[check in the example](https://github.com/jurgob/vonage-conversation-api-chat-examples/blob/main/src/server.js#L49)
+
+
+
+
+
 
 
 ### create a user
