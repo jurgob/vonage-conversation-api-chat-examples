@@ -33,13 +33,15 @@
                 url: ws_url,
                 nexmo_api_url: api_url
             }
-
+            console.log(clientConfig)
             //we are connecting the client sdk with the backend
-            const nexmoClient = await new NexmoClient(clientConfig)
-                .createSession(token)
+
+            const nexmoClient = await new NexmoClient(clientConfig).createSession(token)
+
+            // window.nexmoClient = nexmoClient
             
             
-            console.log(nexmoClient)
+            // console.log(nexmoClient)
         
         }
 

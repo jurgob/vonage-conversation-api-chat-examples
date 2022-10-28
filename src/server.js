@@ -25,7 +25,7 @@ const CONFIG = {
 }
 
 const now = (Date.now() / 1000) 
-const ONE_YEAR_FROM_NOW = now + (((60 * 60)  * 60 ) * 24 * 365) //by default the token will expire in 1 year. hopefully your server will restart before that. 
+const ONE_YEAR_FROM_NOW = Math.floor(now + (((60 * 60)  * 60 ) * 24 * 365)) //by default the token will expire in 1 year. hopefully your server will restart before that. 
 const ACL_SUPER_PERMISSIVE = {
     "paths": {
         "/**": {}
@@ -47,7 +47,7 @@ const SERVER_TOKEN = generateToken({
     this is gonna be used by the client sdk, so is easily incerceptable 
 */
 function generateTokenForUser(username){
-    const ONE_WEEK_FROM_NOW = now + (((60 * 60)  * 60 ) * 24 * 7) //hopefully your user will logout before one week
+    const ONE_WEEK_FROM_NOW = Math.floor(now + (((60 * 60)  * 60 ) * 24 * 7)) //hopefully your user will logout before one week
     const ACL_LESS_PERMISSIVE = {
         "paths":{
             "/*/users/**":{},
@@ -68,7 +68,8 @@ function generateTokenForUser(username){
         private_key: CONFIG.private_key, 
         application_id:CONFIG.application_id, 
         acl: ACL_LESS_PERMISSIVE, 
-        expiration: ONE_WEEK_FROM_NOW
+        expiration: ONE_WEEK_FROM_NOW,
+        sub:username
     })
 }
 
